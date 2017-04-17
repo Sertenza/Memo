@@ -18,23 +18,22 @@ class Deck {
     private $deck = array();
 
     public function __construct($nbcarte) {
-        $connexion = new Connexion_db('root', ''); // A la variable $connexion on assigne l'instance la class Connexion_db.
-        //// Dans cette instanciation on appel constructeur de la class Connexion_db. Ce constructeur prend 2 paramètres, ici 'root et ''.
-        $lareq = "Select * from cartes limit :nbcarte";
+        $connexion = new Connexion_db('root', ''); //voir index.php
+        $lareq = "Select * from cartes limit :nbcarte"; // Création de la requête
 
-        $mondbh = $connexion->get_dbh(); // L'attribut $variable prend la valeur $connexion qui va chercher l'attribut dbh qui est présent dans l'objet instancier à la ligne 37
-        $query = $mondbh->prepare($lareq);
-        $query->execute(array(':nbcarte' => $nbcarte));
+        $mondbh = $connexion->get_dbh(); //voir index.php
+        $query = $mondbh->prepare($lareq); // $mondbh accéde à la fonction prepare() qui va préparer la requête $lareq --> http://php.net/manual/fr/pdo.prepare.php
+        $query->execute(array(':nbcarte' => $nbcarte)); //accéde à la fonction execute() et l'affiche dans un tableau qui aura pour proportion le nombre de carte.
 
-        $compteur = 0;
+        $compteur = 0; //Création du compteur
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {
             $carte = new Carte($row->id_carte, $row->lienurl, $row->id_image);
-            $this->addItem($carte, $compteur);
+            $this->addItem($carte, $compteur); 
             $compteur += 1;
         }
     }
 
-    public function addItem($cartes, $key = null) {
+    public function addItem($cartes, $key = null) { 
         if ($key == null) {
             $this->deck[] = $cartes;
         } else {
@@ -61,9 +60,9 @@ class Deck {
 
 }
 
-        $undeck = new Deck(4);
+        
     public function tourdejeux($idcarte, $idcarte2) {
-
+        $undeck = new Deck(4);
         $uneboite = $undeck->getItem(4);
         $uneboite2 = $undeck->getItem(3);
         $idimgboite1 = $uneboite->get_idimage();

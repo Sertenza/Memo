@@ -7,48 +7,78 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>on test, on fera un copier coller</title>
     </head>
     <body>
-        <style>
-            
-            .Carte{
-                display: inline-block;
-                width: 200px;
-                height: 300px;
-                border: 1px solid black;
-                margin-left: 20px; 
-            }
-            
-                        
-        </style>
-        <div class="Carte" >
-            
-        </div>
         
-        <div class = "Carte">
-            
-            
-        </div>
-        
-        <?php
-        include './Connexion_db.php';
-        
-          $connexion = new Connexion_db('root',''); // A la variable $connexion on assigne l'instance la class Connexion_db.
-          //// Dans cette instanciation on appel constructeur de la class Connexion_db. Ce constructeur prend 2 paramètres, ici 'root et ''.
-          $lareq = "Select * from cartes";
-          $mondbh = $connexion->get_dbh();// L'attribut $variable prend la valeur $connexion qui va chercher l'attribut dbh qui est présent dans l'objet instancier à la ligne 37
-          $query = $mondbh ->prepare($lareq);
-          $query ->execute();
-          
-          while ($row=$query->fetch(PDO::FETCH_OBJ))
-          {
-              $id_carte = $row -> id_carte;
-              echo"Voici" .$id_carte. ".";
-              
-          }
+     <style>
+           /* Popup container */
+           #overlay2{
 
-        // put your code here
+    display: none;
+    position: fixed;
+    top:0; right:0; bottom:0; left:0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+
+}
+/*ouverture du pop-up*/
+#overlay2:target{
+    display: block;
+
+}
+
+/*position, taille  du pop-up */
+#overlay2 a{
+
+    font-weight: bold;
+    padding: 100px 70px;
+    background-color: white;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+}
+
+.gauche {
+    position : absolute;
+    left: 25%;
+}
+
+.droite {
+    position : absolute;
+    right : 25%;
+}
+        
+        </style>
+        
+    <div id="overlay2">
+        <a href="Memo.php">
+          <ul class="Niveau">
+              <p>Niveau de jeu</p>
+              <li href="Memo.php">Facile</li>
+              <li href="Memo.php">Moyen</li>
+              <li href="Memo.php">Difficile</li>
+          </ul>
+        </a>
+    </div>   
+
+<ul class="gauche">
+    
+    <li><a href="#overlay2"> Alphabet </a></li>
+    <li><a href="#overlay2"> Animaux </a></li>
+    <li><a href="#overlay2"> Anglais </a></li>
+
+</ul>
+      
+<ul class="droite">
+
+    <li><a href="#overlay2"> Histoire </a></li>
+    <li><a href="#overlay2"> Multiplication </a></li>
+    <li><a href="#overlay2"> Sport </a></li>
+
+</ul>
+       <?php
         ?>
+     
     </body>
 </html>
